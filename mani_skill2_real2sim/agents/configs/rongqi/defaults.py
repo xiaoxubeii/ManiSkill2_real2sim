@@ -11,7 +11,8 @@ class RongqiRobotDefaultConfig:
 
         self.urdf_config = dict(
             _materials=dict(
-                gripper=dict(static_friction=2.0, dynamic_friction=2.0, restitution=0.0)
+                gripper=dict(static_friction=2.0,
+                             dynamic_friction=2.0, restitution=0.0)
             ),
             link=dict(
                 fixed_plate_link=dict(
@@ -20,7 +21,7 @@ class RongqiRobotDefaultConfig:
                     min_patch_radius=0.01,
                 ),
                 Link6=dict(
-                    material="gripper", 
+                    material="gripper",
                     patch_radius=0.01,
                     min_patch_radius=0.01,
                 ),
@@ -29,7 +30,8 @@ class RongqiRobotDefaultConfig:
 
         self.arm_joint_names = ["joint1", "joint2",
                                 "joint3", "joint4", "joint5", "joint6"]
-        self.gripper_joint_names = ["4C2_Joint1"]
+        self.gripper_joint_names = ["4C2_Joint1",  "4C2_Joint5",
+                                    "4C2_Joint2", "4C2_Joint3", "4C2_Joint4", "4C2_Joint6"]
 
         self.arm_stiffness = [1169.7891719504198, 730.0, 808.4601346394447,
                               1229.1299089624076, 1272.2760456418862, 1056.3326605132252]
