@@ -103,10 +103,13 @@ class BaseEnv(gym.Env):
         self._renderer_type = renderer
         if renderer_kwargs is None:
             renderer_kwargs = {}
+        # TODO
+        renderer_kwargs["offscreen_only"] = False
         if self._renderer_type == "sapien":
             self._renderer = sapien.SapienRenderer(**renderer_kwargs)
             if shader_dir == "ibl":
-                _render_config = dict(camera_shader_dir="ibl", viewer_shader_dir="ibl")
+                _render_config = dict(
+                    camera_shader_dir="ibl", viewer_shader_dir="ibl")
             elif shader_dir == "rt":
                 _render_config = dict(
                     camera_shader_dir="rt",
@@ -124,7 +127,8 @@ class BaseEnv(gym.Env):
             _render_config.update(render_config)
             for k, v in _render_config.items():
                 setattr(sapien.render_config, k, v)
-            self._renderer.set_log_level(os.getenv("MS2_RENDERER_LOG_LEVEL", "warn"))
+            self._renderer.set_log_level(
+                os.getenv("MS2_RENDERER_LOG_LEVEL", "warn"))
         elif self._renderer_type == "client":
             self._renderer = sapien.RenderClient(**renderer_kwargs)
             # TODO(jigu): add `set_log_level` for RenderClient?
@@ -146,21 +150,24 @@ class BaseEnv(gym.Env):
         if obs_mode is None:
             obs_mode = self.SUPPORTED_OBS_MODES[0]
         if obs_mode not in self.SUPPORTED_OBS_MODES:
-            raise NotImplementedError("Unsupported obs mode: {}".format(obs_mode))
+            raise NotImplementedError(
+                "Unsupported obs mode: {}".format(obs_mode))
         self._obs_mode = obs_mode
 
         # Reward mode
         if reward_mode is None:
             reward_mode = self.SUPPORTED_REWARD_MODES[0]
         if reward_mode not in self.SUPPORTED_REWARD_MODES:
-            raise NotImplementedError("Unsupported reward mode: {}".format(reward_mode))
+            raise NotImplementedError(
+                "Unsupported reward mode: {}".format(reward_mode))
         self._reward_mode = reward_mode
 
         # Control mode
         self._control_mode = control_mode
         # TODO(jigu): Support dict action space
         if control_mode == "*":
-            raise NotImplementedError("Multiple controllers are not supported yet.")
+            raise NotImplementedError(
+                "Multiple controllers are not supported yet.")
 
         # Render mode
         self.render_mode = render_mode
@@ -174,7 +181,8 @@ class BaseEnv(gym.Env):
         if camera_cfgs is not None:
             update_camera_cfgs_from_dict(self._camera_cfgs, camera_cfgs)
         if render_camera_cfgs is not None:
-            update_camera_cfgs_from_dict(self._render_camera_cfgs, render_camera_cfgs)
+            update_camera_cfgs_from_dict(
+                self._render_camera_cfgs, render_camera_cfgs)
 
         # Lighting
         self.enable_shadow = enable_shadow
@@ -203,7 +211,8 @@ class BaseEnv(gym.Env):
 
         self._agent_camera_cfgs = OrderedDict()
         if self._agent_cfg is not None:
-            self._agent_camera_cfgs = parse_camera_cfgs(self._agent_cfg.cameras)
+            self._agent_camera_cfgs = parse_camera_cfgs(
+                self._agent_cfg.cameras)
             self._camera_cfgs.update(self._agent_camera_cfgs)
 
     def _register_cameras(
@@ -213,7 +222,8 @@ class BaseEnv(gym.Env):
         return []
 
     def _configure_render_cameras(self):
-        self._render_camera_cfgs = parse_camera_cfgs(self._register_render_cameras())
+        self._render_camera_cfgs = parse_camera_cfgs(
+            self._register_render_cameras())
 
     def _register_render_cameras(
         self,
@@ -443,7 +453,8 @@ class BaseEnv(gym.Env):
             self._scene.set_ambient_light([0.1, 0.1, 0.1])
             self._scene.add_point_light([-0.349, 0, 1.4], [1.0, 0.9, 0.9])
         else:
-            raise NotImplementedError("Unsupported background: {}".format(self.bg_name))
+            raise NotImplementedError(
+                "Unsupported background: {}".format(self.bg_name))
 
         if not path.exists():
             raise FileNotFoundError(
@@ -664,11 +675,11 @@ class BaseEnv(gym.Env):
         KINEMANTIC_DIM = 13  # [pos, quat, lin_vel, ang_vel]
         start = 0
         for actor in self._actors:
-            set_actor_state(actor, state[start : start + KINEMANTIC_DIM])
+            set_actor_state(actor, state[start: start + KINEMANTIC_DIM])
             start += KINEMANTIC_DIM
         for articulation in self._articulations:
             ndim = KINEMANTIC_DIM + 2 * articulation.dof
-            set_articulation_state(articulation, state[start : start + ndim])
+            set_articulation_state(articulation, state[start: start + ndim])
             start += ndim
 
     def get_state(self):
@@ -750,7 +761,8 @@ class BaseEnv(gym.Env):
         elif self.render_mode == "cameras":
             return self.render_cameras()
         else:
-            raise NotImplementedError(f"Unsupported render mode {self.render_mode}.")
+            raise NotImplementedError(
+                f"Unsupported render mode {self.render_mode}.")
 
     # ---------------------------------------------------------------------------- #
     # Advanced
@@ -762,7 +774,8 @@ class BaseEnv(gym.Env):
         if self.agent is not None:
             articulations.pop(articulations.index(self.agent.robot))
         for articulation in articulations:
-            articulation_mesh = merge_meshes(get_articulation_meshes(articulation))
+            articulation_mesh = merge_meshes(
+                get_articulation_meshes(articulation))
             if articulation_mesh:
                 meshes.append(articulation_mesh)
 
