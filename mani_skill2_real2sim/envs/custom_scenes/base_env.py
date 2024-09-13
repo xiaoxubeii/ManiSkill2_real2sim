@@ -157,6 +157,8 @@ class CustomSceneEnv(BaseEnv):
                 # hardcoded for now
                 scene_path = str(self.scene_root /
                                  "stages/bridge_table_1_v1.glb")
+            elif 'rongqirobot' in self.robot_uid:
+                scene_path = str(self.scene_root / "stages/google_pick_coke_can_1_v4.glb)
             else:
                 raise NotImplementedError(
                     f"Default scene path for {self.robot_uid} is not yet set")
@@ -175,6 +177,9 @@ class CustomSceneEnv(BaseEnv):
             elif 'widowx' in self.robot_uid:
                 # corresponds to the default offset of bridge_table_1_v1.glb
                 scene_offset = np.array([-2.0634, -2.8313, 0.0])
+            elif 'rongqirobot' in self.robot_uid:
+                # corresponds to the default offset of google_pick_coke_can_1_v4.glb
+                scene_offset = np.array([-1.6616, -3.0337, 0.0])
             else:
                 raise NotImplementedError(
                     f"Default scene offset for {self.robot_uid} is not yet set")
@@ -366,7 +371,7 @@ class CustomSceneEnv(BaseEnv):
         pose = look_at([0.3, 0, 0.6], [-0.1, 0, 0.1])
         return CameraConfig(
             "base_camera", pose.p, pose.q, 128, 128, np.pi / 2, 0.01, 10
-        )
+            base_env)
 
     def _register_render_cameras(self):
         # camera for visualization and debugging purposes
