@@ -9,6 +9,24 @@ class RongqiRobotDefaultConfig:
     def __init__(self):
         self.urdf_path = "{PACKAGE_ASSET_DIR}/descriptions/rm_65_b_description/urdf/rm_65_b_description.urdf"
 
+        self.urdf_config = dict(
+            _materials=dict(
+                gripper=dict(static_friction=2.0, dynamic_friction=2.0, restitution=0.0)
+            ),
+            link=dict(
+                fixed_plate_link=dict(
+                    material="gripper",
+                    patch_radius=0.01,
+                    min_patch_radius=0.01,
+                ),
+                Link6=dict(
+                    material="gripper", 
+                    patch_radius=0.01,
+                    min_patch_radius=0.01,
+                ),
+            ),
+        )
+
         self.arm_joint_names = ["joint1", "joint2",
                                 "joint3", "joint4", "joint5", "joint6"]
         self.gripper_joint_names = ["4C2_Joint1"]
