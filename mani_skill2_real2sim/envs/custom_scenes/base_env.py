@@ -158,7 +158,8 @@ class CustomSceneEnv(BaseEnv):
                 scene_path = str(self.scene_root /
                                  "stages/bridge_table_1_v1.glb")
             elif 'rongqirobot' in self.robot_uid:
-                scene_path = str(self.scene_root / "stages/google_pick_coke_can_1_v4.glb)
+                scene_path = str(self.scene_root /
+                                 "stages/google_pick_coke_can_1_v4.glb")
             else:
                 raise NotImplementedError(
                     f"Default scene path for {self.robot_uid} is not yet set")
