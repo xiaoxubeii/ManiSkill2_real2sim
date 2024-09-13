@@ -12,7 +12,7 @@ from mani_skill2_real2sim.utils.sapien_utils import (
 
 
 class RongqiRobot(BaseAgent):
-    _config: defaults.RongqiDefaultConfig
+    _config: defaults.RongqiRobotDefaultConfig
 
     """
     Rongqi 6DoF robot
