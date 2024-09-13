@@ -7,7 +7,7 @@ from mani_skill2_real2sim.utils.sapien_utils import look_at
 
 class RongqiRobotDefaultConfig:
     def __init__(self):
-        self.urdf_path = "{PACKAGE_ASSET_DIR}/descriptions/rm_65_b_description/urdf/rm_65_b_description.urdf"
+        self.urdf_path = "{PACKAGE_ASSET_DIR}/descriptions/rm65b_description/urdf/rm_65_b_description.urdf"
 
         self.urdf_config = dict(
             _materials=dict(
